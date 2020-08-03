@@ -2,25 +2,22 @@ import fasttext
 import numpy as np
 import scipy
 import nltk
-from nltk.corpus import stopwords
-
-stop = stopwords.words('english')
 
 PRETRAINED_MODEL_PATH = "vectors/english/cc.en.300.bin"
 model = fasttext.load_model(PRETRAINED_MODEL_PATH)
 
 
-def cos_similarity(data_1, data_2):
-    sent1_emb = np.mean([model[x] for word in data_1 for x in word.split() if x not in stop], axis=0)
-    sent2_emb = np.mean([model[x] for word in data_2 for x in word.split() if x not in stop], axis=0)
+def cos_similarity(sentence, word):
+    sent1_emb = model.get_sentence_vector(sentence)
+    sent2_emb = model.get_word_vector(word)
     return (1 - scipy.spatial.distance.cosine(sent1_emb, sent2_emb))
 
 
-good_barometer = ["good"]
-bad_barometer = ["bad"]
+good_barometer = "good"
+bad_barometer = "bad"
 
-test_good_sentence = ["Wow, this is a really great sentence. I love it."]
-test_bad_sentence = ["This is terrible. I hate it."]
+test_good_sentence = "Wow, this is a really great sentence. I love it."
+test_bad_sentence = "This is terrible. I hate it."
 
 good_good = cos_similarity(test_good_sentence, good_barometer)
 good_bad = cos_similarity(test_good_sentence, bad_barometer)
