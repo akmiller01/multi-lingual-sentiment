@@ -15,13 +15,20 @@ def cos_similarity(data_1, data_2):
     return (1 - scipy.spatial.distance.cosine(sent1_emb, sent2_emb))
 
 
-good_barometer = ["good", "positive"]
-bad_barometer = ["bad", "negative"]
+good_barometer = ["good"]
+bad_barometer = ["bad"]
 
 test_good_sentence = ["Wow, this is a really great sentence. I love it."]
 test_bad_sentence = ["This is terrible. I hate it."]
 
-print("How good is the test good sentence?", cos_similarity(test_good_sentence, good_barometer))
-print("How bad is the test good sentence?", cos_similarity(test_good_sentence, bad_barometer))
-print("How bad is the test bad sentence?", cos_similarity(test_bad_sentence, bad_barometer))
-print("How good is the test bad sentence?", cos_similarity(test_bad_sentence, bad_barometer))
+good_good = cos_similarity(test_good_sentence, good_barometer)
+good_bad = cos_similarity(test_good_sentence, bad_barometer)
+bad_bad = cos_similarity(test_bad_sentence, bad_barometer)
+bad_good = cos_similarity(test_bad_sentence, good_barometer)
+
+print("How good is the test good sentence?", good_good)
+print("How bad is the test good sentence?", good_bad)
+print("Test good sentence is most likely '{}'.".format("good" if good_good > good_bad else "bad"))
+print("How bad is the test bad sentence?", bad_bad)
+print("How good is the test bad sentence?", bad_good)
+print("Test bad sentence is most likely '{}'.".format("bad" if bad_bad > bad_good else "bad"))
