@@ -2,11 +2,16 @@ import fasttext
 import numpy as np
 import scipy
 import nltk
-from nltk.corpus import stopwords
 
-stop = stopwords.words('english')
 
-PRETRAINED_MODEL_PATH = "vectors/english/cc.en.300.bin"
+stop = list()
+with open("stopwords/swahili/stopwords.txt", "r") as sw_file:
+    stop = sw_file.readlines()
+
+stop = [word.strip() for word in stop]
+
+
+PRETRAINED_MODEL_PATH = "vectors/swahili/cc.sw.300.bin"
 model = fasttext.load_model(PRETRAINED_MODEL_PATH)
 
 
@@ -16,11 +21,11 @@ def cos_similarity(data_1, data_2):
     return (1 - scipy.spatial.distance.cosine(sent1_emb, sent2_emb))
 
 
-good_barometer = ["good"]
-bad_barometer = ["bad"]
+good_barometer = ["nzuri"]
+bad_barometer = ["mbaya"]
 
-test_good_sentence = ["Wow, this is a really great sentence. I love it."]
-test_bad_sentence = ["This is terrible. I hate it."]
+test_good_sentence = ["Wow, hii ni sentensi ya kushangaza sana. Ninaipenda."]
+test_bad_sentence = ["Sipendi hii. Haiwezekani."]
 
 good_good = cos_similarity(test_good_sentence, good_barometer)
 good_bad = cos_similarity(test_good_sentence, bad_barometer)
