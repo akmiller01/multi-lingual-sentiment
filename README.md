@@ -28,7 +28,7 @@ print(predictions)
 # returns ([['__label__sw']], [array([0.8830707], dtype=float32)]) Swahili with 88% confidence
 ```
 
-### Untrained language sentiment analysis (English)
+### Pretrained language sentiment analysis (English)
 ```
 import fasttext
 import numpy as np
@@ -66,7 +66,7 @@ print("How good is the test bad sentence?", bad_good) # 0.3502688705921173
 print("Test bad sentence is most likely '{}'.".format("bad" if bad_bad > bad_good else "good")) # 'bad'
 ```
 
-### Untrained language sentiment analysis (Swahili)
+### Pretrained language sentiment analysis (Swahili)
 ```
 import fasttext
 import numpy as np
